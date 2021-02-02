@@ -8,5 +8,10 @@ setup(
 
     license = "AGPLv3 or later",
     keywords = "scraper news simple web",
-    packages = ["simplynews_sites", "simplynews_sites/helpers"]
+    packages = ["simplynews_sites", "simplynews_sites/helpers"],
+    install_requires = [
+        "bs4",
+        "requests",
+        "feedparser"
+    ]
 )
