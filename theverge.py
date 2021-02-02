@@ -1,8 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
-import urllib
-import feedparser
 from datetime import timedelta
+from helpers import rss
 
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "theverge"
@@ -46,17 +45,8 @@ def get_page(url):
 
 
 def get_recent_articles():
-    feed = feedparser.parse(rss_feed)
-    feed_ = []
-    for entry in feed["entries"]:
-        url = urllib.parse.urlparse(entry["link"])
-        local_link = url.path.strip("/")  # Kill annoying slashes
-
-        feed_.append({"title": entry["title"], "link": local_link})
-
-    return feed_
-
+    return rss.default_feed_parser(rss_feed)
 
 if __name__ == "__main__":
-    get_page("2021/1/30/22257721/whatsapp-status-privacy-facebook-signal-telegram/")
-    # get_recent_articles()
+    #get_page("2021/1/30/22257721/whatsapp-status-privacy-facebook-signal-telegram/")
+    print(get_recent_articles())

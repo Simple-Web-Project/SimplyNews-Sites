@@ -1,8 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
-import feedparser
-import urllib
 from datetime import timedelta
+from helpers import rss
 
 cache_refresh_time_delta = timedelta(days=1)
 identifier = "decentralizetoday"
@@ -68,13 +67,7 @@ def get_page(url):
 
 
 def get_recent_articles():
-    feed = feedparser.parse(rss_feed)
-    feed_ = []
+    return rss.default_feed_parser(rss_feed)
 
-    for entry in feed["entries"]:
-        url = urllib.parse.urlparse(entry["link"])
-        local_link = url.path.strip("/")  # Kill annoying slashes
-
-        feed_.append({"title": entry["title"], "link": local_link})
-
-    return feed_
+if __name__ == "__main__":
+    print(get_recent_articles())
