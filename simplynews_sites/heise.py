@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import timedelta
-from helpers import rss
+from simplynews_sites.helpers import rss
 
 base_url = "https://heise.de"
 

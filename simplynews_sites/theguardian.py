@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 from datetime import timedelta
-from helpers import rss
+from simplynews_sites.helpers import rss
 
 identifier = "theguardian"
 cache_refresh_time_delta = timedelta(hours=12)
