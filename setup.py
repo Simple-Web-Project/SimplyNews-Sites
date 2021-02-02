@@ -8,5 +8,5 @@ setup(
 
     license = "AGPLv3 or later",
     keywords = "scraper news simple web",
-    packages = ["simplynews_sites"]
+    packages = ["simplynews_sites", "simplynews_sites/helpers"]
 )

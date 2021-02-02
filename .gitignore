@@ -1,3 +1,6 @@
 __pycache__
 simplynews_sites/__pycache__
 simplynews_sites/helpers/__pycache__
+build/
+dist/
+simplynews_sites.egg-info/
