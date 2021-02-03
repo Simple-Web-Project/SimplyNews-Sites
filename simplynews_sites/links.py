@@ -1,4 +1,12 @@
-from . import gameinformer, makeuseof, androidauthority, heise, itsfoss, decentralizetoday,  nypost, theguardian, theverge
+from . import gameinformer
+from . import makeuseof
+from . import androidauthority
+from . import heise
+from . import theverge
+from . import itsfoss
+from . import decentralizetoday
+from . import nypost
+from . import theguardian
 
 sites = {
     "gameinformer.com": gameinformer,
