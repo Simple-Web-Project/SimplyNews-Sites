@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import timedelta
-from .helpers import rss
+from .helpers import (rss, string)
 
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "makeuseof"
@@ -46,7 +46,7 @@ def get_page(url):
         elif element.name in ("h1", "h2", "h3", "h4", "h5", "h6"):
             el["type"] = "header"
             el["size"] = element.name
-            el["value"] = element.text
+            el["value"] = string.cleanup_spaces(element.text.strip('\n'))
         else:
             if element.name is not None:
                 print("Ignoring:", element.name)
