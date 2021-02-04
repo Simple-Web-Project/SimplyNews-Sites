@@ -21,7 +21,7 @@ def get_page(url):
     data = {
         "title": page_data["config"]["page"]["headline"],
         "author": page_data["config"]["page"]["author"] or "Reuters",
-        "last_updated": soup.select_one(".content__dateline time").text,
+        "last_updated": soup.select_one(".content__dateline time").text.strip("\n").strip(),
     }
 
     c = []
