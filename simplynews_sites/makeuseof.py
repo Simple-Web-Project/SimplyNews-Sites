@@ -43,9 +43,6 @@ def get_page(url):
         elif element.name == 'strong':
             el['type'] = 'strong'
             el['value'] = element.text
-        elif element.name == 'img':
-            el['type'] = 'image'
-            print(element)
         elif element.name in ("h1", "h2", "h3", "h4", "h5", "h6"):
             el["type"] = "header"
             el["size"] = element.name
