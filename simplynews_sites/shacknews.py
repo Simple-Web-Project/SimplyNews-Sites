@@ -36,6 +36,13 @@ def get_page(url):
             else:
                 el['type'] = 'paragraph'
                 el['value'] = element.text
+        elif element.name == 'blockquote':
+            el["type"] = "blockquote"
+            el['value'] = element.text
+        elif element.name in ("h1", 'h2', 'h3', 'h4', 'h5', 'h6'):
+            el['type'] = 'header'
+            el['size'] = element.name
+            el['value'] = element.text
         else:
             if element.name is not None:
                 print("Ignoring:", element.name)
