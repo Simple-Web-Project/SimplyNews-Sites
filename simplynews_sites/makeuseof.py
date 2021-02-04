@@ -35,7 +35,7 @@ def get_page(url):
 
         if element.name == 'p':
             el["type"] = 'paragraph'
-            el['value'] = element.text
+            el['value'] = string.cleanup_spaces(element.text.strip('\n'))
         elif element.name == 'a':
             el["type"] = 'link'
             el['href'] = element['href']
