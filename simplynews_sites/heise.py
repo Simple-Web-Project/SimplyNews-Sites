@@ -44,7 +44,7 @@ def get_page(url):
         el = {}
         if element.name == "p":
             el["type"] = "paragraph"
-            el["value"] = element.text
+            el["value"] = element.text.strip()
         elif element.name in ("h1", "h2", "h3", "h4", "h5", "h6"):
             el["type"] = "header"
             el["size"] = element.name
