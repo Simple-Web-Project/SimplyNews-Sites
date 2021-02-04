@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import timedelta
-from .helpers import (rss, string)
+from .helpers import rss
 
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "makeuseof"
@@ -35,7 +35,7 @@ def get_page(url):
 
         if element.name == 'p':
             el["type"] = 'paragraph'
-            el['value'] = string.cleanup_spaces(element.text.strip('\n'))
+            el['value'] = element.text.strip('\n').strip()
         elif element.name == 'a':
             el["type"] = 'link'
             el['href'] = element['href']
@@ -46,7 +46,7 @@ def get_page(url):
         elif element.name in ("h1", "h2", "h3", "h4", "h5", "h6"):
             el["type"] = "header"
             el["size"] = element.name
-            el["value"] = string.cleanup_spaces(element.text.strip('\n'))
+            el["value"] = element.text.strip('\n').strip()
         else:
             if element.name is not None:
                 print("Ignoring:", element.name)
