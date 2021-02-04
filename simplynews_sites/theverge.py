@@ -17,7 +17,7 @@ def get_page(url):
     data = {
         "title": soup.find("h1", class_="c-page-title").text,
         "author": soup.find("span", class_="c-byline__author-name").text,
-        "last_updated": soup.find("time", class_="c-byline__item").text,
+        "last_updated": soup.find("time", class_="c-byline__item").text.strip('\n').strip(),
     }
 
     title_image = soup.find("picture", class_="c-picture").find("img")
