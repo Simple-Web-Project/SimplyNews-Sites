@@ -25,7 +25,7 @@ def get_page(url):
     )
 
     data = {
-        "title": soup.select_one(".article-header h1").text,
+        "title": soup.select_one(".article-header h1").text.strip('\n').strip(),
         "author": soup.select_one("#author-byline .byline").text.replace("By ", ""),
         "last_updated": last_updated,
     }
