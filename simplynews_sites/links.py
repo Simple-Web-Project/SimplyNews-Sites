@@ -8,6 +8,7 @@ from . import decentralizetoday
 from . import nypost
 from . import theguardian
 from . import shacknews
+from . import androidpolice
 
 sites = {
     "shacknews.com": shacknews,
@@ -21,6 +22,9 @@ sites = {
 
     "androidauthority.com": androidauthority,
     "www.androidauthority.com": androidauthority,
+
+    "www.androidpolice.com": androidpolice,
+    "androidpolice.com": androidpolice,
 
     "heise.de": heise,
     "www.heise.de": heise,

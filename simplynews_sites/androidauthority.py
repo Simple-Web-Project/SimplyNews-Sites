@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from datetime import timedelta
 from .helpers import rss
+from .helpers import constants
 
 base_url = "https://androidauthority.com"
 
@@ -12,8 +13,6 @@ site_title = "Android Authority"
 
 rss_feed = f"{base_url}/feed/"
 
-user_agent = "Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0"
-
 
 def get_page(url):
     full_url = f"{base_url}/{url}"
@@ -21,7 +20,7 @@ def get_page(url):
         requests.get(
             full_url,
             headers={
-                "User-Agent": user_agent,
+                "User-Agent": constants.USER_AGENT,
             },
         ).text,
         "lxml",
@@ -81,6 +80,8 @@ def get_page(url):
 def get_recent_articles():
     return rss.default_feed_parser(rss_feed)
 
+
 if __name__ == "__main__":
-    #get_page("pioneer-dolby-atmos-add-on-speakers-deal-1196972")
-    print(get_recent_articles())
+    # page = get_page("pioneer-dolby-atmos-add-on-speakers-deal-1196972")
+    page = get_recent_articles()
+    print(page)
