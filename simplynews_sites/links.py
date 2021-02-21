@@ -9,6 +9,7 @@ from . import nypost
 from . import theguardian
 from . import shacknews
 from . import androidpolice
+from . import lefigaro
 
 sites = {
     "shacknews.com": shacknews,
@@ -42,5 +43,8 @@ sites = {
 
     "theguardian.com": theguardian,
     "www.theguardian.com": theguardian,
+
+    "lefigaro.fr": lefigaro,
+    "www.lefigaro.fr": lefigaro,
 }
 
