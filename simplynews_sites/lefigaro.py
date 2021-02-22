@@ -218,7 +218,7 @@ def get_element(element, is_live=False):
             iframe = data_html.select_one("iframe")
             if iframe is not None:
                 el["type"] = "iframe"
-                el["src"] = iframe["src"]
+                el["src"] = utils.fix_link(iframe["src"])
                 el["width"] = iframe.get("width")
                 el["height"] = iframe.get("height")
                 return el
