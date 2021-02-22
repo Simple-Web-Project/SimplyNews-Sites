@@ -114,12 +114,18 @@ def get_page(url):
 
                 entries.append({"value": "{} : {}%".format(label, percentage)})
 
-            el = {
+            article.append({
                 "type": "unsorted list",
                 "entries": entries
-            }
+            })
 
-            article.append(el)
+            votes = poll_element.get("data-voters")
+
+            article.append({
+                "type": "paragraph",
+                "value": "{} votes".format(votes)
+            })
+
             data["article"] = article
             return data
 
