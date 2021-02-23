@@ -12,6 +12,7 @@ setup(
     install_requires = [
         "bs4",
         "requests",
-        "feedparser"
+        "feedparser",
+        "lxml"
     ]
 )
