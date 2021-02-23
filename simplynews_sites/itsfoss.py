@@ -3,6 +3,7 @@ import requests
 import feedparser
 import urllib
 import datetime
+from .helpers import utils
 
 cache_refresh_time_delta = datetime.timedelta(days=1)
 identifier = "itsfoss"
@@ -26,10 +27,16 @@ def get_page(url):
 
     data = {}
     data["title"] = title
+    data["subtitle"] = utils.get_subtitle(soup)
     data["last_updated"] = last_updated
     data["author"] = author
 
     c = []
+
+    heading_image = utils.get_heading_image(soup)
+    if heading_image is not None:
+        c.append(heading_image)
+
     for element in content:
         el = {}
         if element.name == "p":

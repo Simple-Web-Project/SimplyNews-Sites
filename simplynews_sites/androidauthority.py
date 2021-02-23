@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import timedelta
-from .helpers import rss
+from .helpers import rss, utils
 from .helpers import constants
 
 base_url = "https://androidauthority.com"
@@ -28,11 +28,16 @@ def get_page(url):
 
     data = {
         "title": soup.find("h1", class_="main-title").text,
+        "subtitle": utils.get_subtitle(soup),
         "author": soup.find("div", class_="author-name-block").find("a").text,
         "last_updated": soup.find("span", class_="publication-time").text,
     }
 
     c = []
+
+    heading_image = utils.get_heading_image(soup)
+    if heading_image is not None:
+        c.append(heading_image)
 
     for element in soup.find("div", id="content-anchor-inner"):
 

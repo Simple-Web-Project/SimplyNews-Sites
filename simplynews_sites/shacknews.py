@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import timedelta
-from .helpers import rss
+from .helpers import rss, utils
 
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "shacknews"
@@ -25,6 +25,10 @@ def get_page(url):
 
     c = []
 
+    heading_image = utils.get_heading_image(soup)
+    if heading_image is not None:
+        c.append(heading_image)
+
     for element in soup.find('section', class_='article-content').find('main'):
         el = {}
         if element.name == 'p':
@@ -32,7 +36,9 @@ def get_page(url):
             if vid is not None:
                 print()
                 el['type'] = 'iframe'
-                el['src'] = vid['src']
+                el['src'] = utils.fix_link(vid['src'])
+                el["width"] = vid.get("width")
+                el["height"] = vid.get("height")
             else:
                 el['type'] = 'paragraph'
                 el['value'] = element.text
@@ -50,7 +56,7 @@ def get_page(url):
 
         if el is not None:
             c.append(el)
-            
+
     data['article'] = c
 
     return data
@@ -61,5 +67,9 @@ def get_recent_articles():
 
 
 if __name__ == "__main__":
-    print(get_recent_articles())
-    #get_page("2021/01/30/john-chaneys-kindness-wont-be-forgotten/")
+    # page = get_recent_articles()
+
+    page_url = "article/122896/watch-nasas-perseverance-rovers-new-video-and-images-here"
+    # youtube iframe
+
+    page = get_page(page_url)

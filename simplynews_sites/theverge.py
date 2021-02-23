@@ -7,15 +7,18 @@ cache_refresh_time_delta = timedelta(hours=12)
 identifier = "theverge"
 site_title = "TheVerge"
 
-rss_feed = "https://theverge.com/rss/full.xml"
+base_url = "https://theverge.com"
+
+rss_feed = f"{base_url}/rss/full.xml"
 
 
 def get_page(url):
-    full_url = "https://theverge.com/" + url
+    full_url = f"{base_url}/{url}"
     soup = BeautifulSoup(requests.get(full_url).text, "lxml")
 
     data = {
         "title": soup.find("h1", class_="c-page-title").text,
+        "subtitle": soup.select_one("p.c-entry-summary").text,
         "author": soup.find("span", class_="c-byline__author-name").text,
         "last_updated": soup.find("time", class_="c-byline__item").text.strip('\n').strip(),
     }
@@ -47,6 +50,7 @@ def get_page(url):
 def get_recent_articles():
     return rss.default_feed_parser(rss_feed)
 
+
 if __name__ == "__main__":
-    #get_page("2021/1/30/22257721/whatsapp-status-privacy-facebook-signal-telegram/")
+    # get_page("2021/1/30/22257721/whatsapp-status-privacy-facebook-signal-telegram/")
     print(get_recent_articles())

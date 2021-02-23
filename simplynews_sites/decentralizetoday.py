@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import timedelta
-from .helpers import rss
+from .helpers import rss, utils
 
 cache_refresh_time_delta = timedelta(days=1)
 identifier = "decentralizetoday"
@@ -29,6 +29,11 @@ def get_page(url):
     data["author"] = author
 
     c = []
+
+    heading_image = utils.get_heading_image(soup)
+    if heading_image is not None:
+        c.append(heading_image)
+
     for element in content:
         el = {}
         if element.name == "p":
@@ -71,6 +76,7 @@ def get_page(url):
 
 def get_recent_articles():
     return rss.default_feed_parser(rss_feed)
+
 
 if __name__ == "__main__":
     print(get_recent_articles())
