@@ -202,13 +202,13 @@ def get_element(element, is_live=False):
             strong = element.select_one("strong")
             if not is_related_article(strong) and not is_related_article(element):
                 el["type"] = "paragraph"
-                el["value"] = element.text
+                el["value"] = element.text.strip("\n").strip()
     elif element.name == "div" and utils.value_in_element_attr(element, "fig-premium-paywall"):
         # paywall. Display info (% left) without info encouraging to subscribe
         info = element.select_one("p.fig-premium-paywall__infos")
         if info is not None:
             el["type"] = "paragraph"
-            el["value"] = info.text
+            el["value"] = info.text.strip("\n").strip()
     elif element.name == "figure":
         img = element.select_one("img")
         if img is not None:
