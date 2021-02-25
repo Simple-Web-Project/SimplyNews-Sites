@@ -48,9 +48,11 @@ sites = {
     "lefigaro.fr": lefigaro,
     "www.lefigaro.fr": lefigaro,
 
-    "www.francetvinfo.fr": franceinfo,
-    "francetvinfo.fr": franceinfo,
-    "www.franceinfo.fr": franceinfo,
-    "franceinfo.fr": franceinfo,
+
+    #TODO: Fix franceinfo parsing
+    #"www.francetvinfo.fr": franceinfo,
+    #"francetvinfo.fr": franceinfo,
+    #"www.franceinfo.fr": franceinfo,
+    #"franceinfo.fr": franceinfo,
 
 }
