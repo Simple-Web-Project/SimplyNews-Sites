@@ -2,8 +2,6 @@ from .helpers import rss, utils
 from datetime import timedelta, datetime
 from bs4 import BeautifulSoup
 import requests
-import feedparser
-import urllib
 import json
 import bs4
 
@@ -166,19 +164,7 @@ def get_page(url):
 
 
 def get_recent_articles():
-    feed = feedparser.parse(rss_feed)
-    feed_ = []
-    for entry in feed["entries"]:
-        url = urllib.parse.urlparse(entry["link"])
-
-        if url.hostname == "www.lefigaro.fr":  # ignore subdomains
-            local_link = url.path.strip("/")  # Kill annoying slashes
-            feed_.append({
-                "title": entry["title"],
-                "link": local_link,
-            })
-
-    return feed_
+    return rss.default_feed_parser(rss_feed)
 
 
 def is_related_article(element):
