@@ -1,13 +1,13 @@
 import bs4
 
 
-def value_in_element_attr(element, value, attr="class"):
+def value_in_element_attr(element, value, attr: str = "class"):
     if not type(element) == bs4.element.Tag:
         return False
     else:
         attrs = element.attrs
         if attrs is not None and attrs != {}:
-            return value in element.attrs.get(attr)
+            return value in attrs.get(attr)
         else:
             return False
 
@@ -17,7 +17,7 @@ def fix_link(link):
         return "https:{}".format(link)
 
 
-def get_property(element, attribute):
+def get_property(element, attribute: str):
     """
     Safely get property
     """
@@ -27,7 +27,7 @@ def get_property(element, attribute):
         return element.get(attribute)
 
 
-def get_heading_image(soup):
+def get_heading_image(soup: bs4.BeautifulSoup):
     heading_image = soup.find(
         "meta", property="og:image")
     if heading_image is not None:
@@ -50,7 +50,7 @@ def get_heading_image(soup):
         return None
 
 
-def get_subtitle(soup):
+def get_subtitle(soup: bs4.BeautifulSoup):
     subtitle = soup.find("meta", property="description") or soup.find(
         "meta", property="og:description")
     if subtitle is None:
