@@ -1,4 +1,4 @@
-from .helpers import rss
+from .helpers import rss, utils
 from datetime import timedelta
 from bs4 import BeautifulSoup
 from html import unescape
@@ -26,7 +26,7 @@ def get_image(img):
     return {
         "type": "image",
         "src": src,
-        "alt": img["alt"]
+        "alt": img.get("alt") or img.get("title")
     }
 
 
@@ -60,7 +60,7 @@ def get_page(url):
     subtitle = unescape(subtitle)
 
     json_element = soup.find("script", type="application/ld+json")
-    if json_element is not None:
+    if json_element:
         info_json = json.loads(json_element.next)
 
     post = soup.select_one("article")
@@ -70,7 +70,7 @@ def get_page(url):
 
     aside = post.select_one("aside")
 
-    if aside is not None:
+    if aside:
         aside = post.select_one("aside")
 
         publish_date = aside.select_one("p.publish-date")
@@ -108,8 +108,8 @@ def get_page(url):
         post_content = post.select_one("div.c-body")
 
     author = ", ".join(authors)
-    if author_group is not None:
-        author = "{} ({})".format(author, author_group)
+    if author_group:
+        author = "{} ({})".format(author, author_group.strip(" \n"))
 
     data = {
         "title": title,
@@ -120,38 +120,71 @@ def get_page(url):
 
     article = []
 
-    if heading_image is not None:
+    if heading_image:
         article.append(get_image(heading_image))
 
     heading_video = post.select_one("figure.video")
-    if heading_video is not None:
+    if heading_video:
         iframe_element = heading_video.select_one("iframe")
         iframe = get_iframe(iframe_element)
-        if iframe is not None:
+        if iframe:
             article.append(iframe)
 
     heading_video = post.select_one("figure.player-video")
-    if heading_video is not None and info_json is not None:
-        video = info_json["video"]
+    if heading_video:
+        if info_json and "video" in info_json:
+            video = info_json["video"]
 
-        article.append({
-            "type": "iframe",
-            "src": video["embedURL"],
-            "width": video["width"]["value"],
-            "height": video["height"]["value"]
-        })
+            if isinstance(video, list):
+                video = video[0]
+
+            article.append({
+                "type": "iframe",
+                "src": video["embedURL"],
+                "width": video["width"]["value"],
+                "height": video["height"]["value"]
+            })
+
+        # else: embedded live stream, but it's not using iframe and blob src url for <video> then hard to extract
 
     for element in post_content:
         el = {}
 
         if element.name == "p":
-            if ">>" not in element.text:  # ignore related article links
+            iframe = element.select_one("iframe")
+            img = element.select_one("img")
+            if iframe:
+                el["type"] = "iframe"
+                el["src"] = iframe["src"]
+                style = iframe.get("style")
+                if style:
+                    styles = style.split(";")
+                    for value in styles:
+                        stripped = value.strip(" ;")
+                        if stripped.startswith("height:"):
+                            el["height"] = stripped.replace("height: ", "")
+            elif img:
+                el = get_image(img)
+
+            elif ">>" not in element.text:  # ignore related article links
                 el["type"] = "paragraph"
                 el["value"] = element.text
 
         elif element.name == "blockquote":
             el["type"] = "blockquote"
             el["value"] = element.text
+            if utils.value_in_element_attr(element, "twitter-tweet"):
+                article.append(el)
+                links = element.select("a")
+                for link in links:
+                    el = {
+                        "type": "link",
+                        "href": link["href"],
+                        "value": link.text
+                    }
+                    article.append(el)
+
+                el = {}
 
         elif element.name == "span":
             el["type"] = "paragraph"
@@ -164,10 +197,10 @@ def get_page(url):
 
         elif element.name == "figure":
             iframe = get_iframe(element.select_one("iframe"))
-            if iframe is not None:
+            if iframe:
                 el = iframe
 
-        if el is not None and el != {}:
+        if el:
             article.append(el)
 
     data["article"] = article
@@ -193,8 +226,23 @@ if __name__ == "__main__":
     # page_url = "sante/maladie/coronavirus/covid-19-le-masque-en-creche-gene-t-il-la-sociabilisation-des-tout-petits_4303509.html"
     # YouTube iframe
 
-    page_url = "sante/maladie/coronavirus/confinement/alpes-maritimes-les-mesures-envisagees-par-le-gouvernement-face-a-l-envolee-des-cas-decovid-19_4305859.html"
+    # page_url = "sante/maladie/coronavirus/confinement/alpes-maritimes-les-mesures-envisagees-par-le-gouvernement-face-a-l-envolee-des-cas-decovid-19_4305859.html"
     # heading_video, akamaidh iframe
+
+    # page_url = "sciences/mars-curiosity/premier-son-capte-sur-mars-le-concepteur-d-un-des-micros-de-perseverance-explique-pourquoi-il-est-important-d-ecouter-la-planete-rouge_4308091.html"
+    # twitter blockquote
+
+    # Franceinfo (tv) livestream embedded (endend and shows replay now)
+    # page_url = "sante/maladie/coronavirus/direct-covid-19-jean-castex-va-s-exprimer-a-18-heures-au-sujet-de-la-dizaine-de-departements-juges-preoccupants_4310813.html"
+
+    # page_url = "sante/maladie/coronavirus/carte-covid-19-decouvrez-les-20-departements-places-en-surveillance-renforcee_4310887.html"
+    # iframe
+
+    # page_url = "sante/maladie/coronavirus/infographies-covid-19-cinq-graphiques-pour-comprendre-la-situation-epidemique-en-france_4310757.html"
+    # infographies
+
+    page_url = "sante/maladie/coronavirus/vaccin/video-covid-19-les-plus-de-65-ans-pourront-se-faire-vacciner-a-partir-de-debut-avril-assure-jean-castex_4310939.html"
+    # multiple videos in json
 
     page = get_page(page_url)
 
