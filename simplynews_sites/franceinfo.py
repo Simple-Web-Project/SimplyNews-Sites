@@ -23,6 +23,10 @@ def get_image(img):
     else:
         src = img["src"]
 
+    # ignore The Conversation's pixel tracking
+    if "count.gif" in src:
+        return None
+
     return {
         "type": "image",
         "src": src,
@@ -243,6 +247,9 @@ if __name__ == "__main__":
 
     page_url = "sante/maladie/coronavirus/vaccin/video-covid-19-les-plus-de-65-ans-pourront-se-faire-vacciner-a-partir-de-debut-avril-assure-jean-castex_4310939.html"
     # multiple videos in json
+
+    page_url = "sante/maladie/coronavirus/covid-19-le-passeport-vaccinal-evoque-par-la-commission-europeenne-est-il-juridiquement-possible_4317149.html"
+    # The Conversation pixel tracking
 
     page = get_page(page_url)
 
