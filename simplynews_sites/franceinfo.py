@@ -53,10 +53,8 @@ def get_iframe(iframe):
 
 
 def get_page(url):
-    full_url = f"{base_url}/{url}"
-
-    response = requests.get(full_url)
-
+    response = requests.get(f"{base_url}/{url}")
+    response.raise_for_status()
     soup = BeautifulSoup(response.text, "lxml")
 
     title = soup.select_one("title").text

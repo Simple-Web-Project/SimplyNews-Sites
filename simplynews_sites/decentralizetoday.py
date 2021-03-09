@@ -13,9 +13,9 @@ rss_feed = f"{base}/rss/"
 
 
 def get_page(url):
-
-    full_url = f"{base}/{url}"
-    soup = BeautifulSoup(requests.get(full_url).text, "lxml")
+    response = requests.get(f"{base}/{url}")
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "lxml")
 
     title = soup.find("h1", class_="post-title").text
     last_updated = soup.select_one(".global-meta > time").text

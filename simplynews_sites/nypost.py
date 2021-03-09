@@ -13,8 +13,9 @@ rss_feed = f"{base_url}/feed/"
 
 
 def get_page(url):
-    full_url = f"{base_url}/" + url
-    soup = BeautifulSoup(requests.get(full_url).text, "lxml")
+    response = requests.get(f"{base_url}/{url}")
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "lxml")
 
     last_updated_p = soup.find("p", class_="byline-date").text.split("|")
     last_updated = " ".join(
@@ -77,4 +78,4 @@ def get_recent_articles():
 
 if __name__ == "__main__":
     print(get_recent_articles())
-    #get_page("2021/01/30/john-chaneys-kindness-wont-be-forgotten/")
+    # get_page("2021/01/30/john-chaneys-kindness-wont-be-forgotten/")

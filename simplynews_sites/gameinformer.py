@@ -13,7 +13,9 @@ rss_feed = f"{base_url}/rss.xml"
 
 def get_page(url):
     full_url = f"{base_url}/{url}"
-    soup = BeautifulSoup(requests.get(full_url).text, "lxml")
+    response = requests.get(full_url)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "lxml")
 
     author = "None"
     last_updated = "None"

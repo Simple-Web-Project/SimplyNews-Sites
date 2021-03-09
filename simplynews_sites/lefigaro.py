@@ -29,27 +29,8 @@ def get_image(img):
 
 
 def get_page(url):
-    full_url = f"{base_url}/{url}"
-
-    response = requests.get(full_url)
-
-    # handle bad response - see #4
-    if response.status_code >= 400:
-        error = "Error - HTTP {} : {}".format(
-            response.status_code, response.reason)
-
-        return {
-            "title": error,
-            "author": site_title,
-            "last_updated": "Unknown",
-            "article": [
-                {
-                    "type": "paragraph",
-                    "value": error
-                }
-            ]
-        }
-
+    response = requests.get(f"{base_url}/{url}")
+    response.raise_for_status()
     soup = BeautifulSoup(response.text, "lxml")
 
     title = soup.select_one("title").text

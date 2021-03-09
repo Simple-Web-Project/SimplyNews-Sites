@@ -14,8 +14,9 @@ rss_feed = f"{base_url}/international/rss"
 
 
 def get_page(url):
-    full_url = f"{base_url}/{url}.json"
-    page_data = json.loads(requests.get(full_url).text)
+    response = requests.get(f"{base_url}/{url}.json")
+    response.raise_for_status()
+    page_data = json.loads(response.text)
     soup = BeautifulSoup(page_data["html"], "lxml")
 
     data = {

@@ -13,9 +13,10 @@ rss_feed = "https://feeds.feedburner.com/ItsFoss"
 
 
 def get_page(url):
+    response = requests.get("https://itsfoss.com/{}".format(url))
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "lxml")
 
-    full_url = "https://itsfoss.com/" + url
-    soup = BeautifulSoup(requests.get(full_url).text, "lxml")
     article = soup.select_one("main.content > article.post")
 
     header = article.find("header", class_="entry-header")
@@ -100,9 +101,9 @@ def get_recent_articles():
     for entry in feed["entries"]:
         # The link provided by the feed is a google proxy link, i.e.
         # http://feedproxy.google.com/~r/ItsFoss/~3/wQc7h-hxYN4, we just want to know where it leads to
-        actual_link = requests.get(entry["link"], allow_redirects=False).headers[
-            "Location"
-        ]
+        response = requests.get(entry["link"], allow_redirects=False)
+        response.raise_for_status()
+        actual_link = response.headers["Location"]
         url = urllib.parse.urlparse(actual_link)
         local_link = url.path.strip("/")  # Kill annoying slashes
 

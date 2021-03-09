@@ -13,8 +13,9 @@ rss_feed = f"{base_url}/rss/heise-atom.xml"
 
 
 def get_page(url):
-    full_url = f"{base_url}/{url}?seite=all"
-    soup = BeautifulSoup(requests.get(full_url).text, "lxml")
+    response = requests.get(f"{base_url}/{url}?seite=all")
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "lxml")
 
     data = {
         "title": soup.find("h1", class_="a-article-header__title").text.strip("\n"),
@@ -56,7 +57,9 @@ def get_page(url):
                     if vid:
                         if vid["type"] == "youtube":
                             el["type"] = "video"
-                            el["src"] = "https://youtube.com/watch?v=" + vid["video-id"]
+                            el["src"] = "https://www.youtube.com/watch?v={}".format(
+                                vid["video-id"])
+
         elif element.name == "a-paid-content-teaser":
             el["type"] = "header"
             el["size"] = "h3"
@@ -77,8 +80,9 @@ def get_page(url):
 def get_recent_articles():
     return rss.default_feed_parser(rss_feed)
 
+
 if __name__ == "__main__":
-    #get_page(
+    # get_page(
     #    "hintergrund/Missing-Link-Roboter-Androide-ueber-Maschinenwesen-und-ihre-Vermenschlichung-5040488.html"
-    #)
+    # )
     print(get_recent_articles())

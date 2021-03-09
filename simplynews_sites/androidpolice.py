@@ -37,12 +37,10 @@ def get_image(image):
 
 
 def get_page(url):
-    full_url = f"{base_url}/{url}"
-
     response = requests.get(
-        full_url, headers={"User-Agent": constants.USER_AGENT}
+        f"{base_url}/{url}", headers={"User-Agent": constants.USER_AGENT}
     )
-
+    response.raise_for_status()
     soup = BeautifulSoup(response.text, "lxml")
 
     post = soup.select_one(".post")

@@ -12,10 +12,13 @@ site_title = "New York Times"
 
 rss_feed = "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
 
+
 def get_page(url):
-    full_url = f"{base_url}/{url}"
-    soup = BeautifulSoup(requests.get(full_url).text, "lxml")
+    response = requests.get(f"{base_url}/{url}")
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "lxml")
     print(soup)
+
 
 def get_recent_articles():
     feed = feedparser.parse(rss_feed)
@@ -28,6 +31,7 @@ def get_recent_articles():
 
     return feed_
 
+
 if __name__ == "__main__":
-    #print(get_recent_articles())
+    # print(get_recent_articles())
     get_page("2021/01/31/us/gene-allmond-john-brooks-hamilton-georgia.html")

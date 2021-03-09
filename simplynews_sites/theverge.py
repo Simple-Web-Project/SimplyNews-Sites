@@ -13,8 +13,9 @@ rss_feed = f"{base_url}/rss/full.xml"
 
 
 def get_page(url):
-    full_url = f"{base_url}/{url}"
-    soup = BeautifulSoup(requests.get(full_url).text, "lxml")
+    response = requests.get(f"{base_url}/{url}")
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "lxml")
 
     data = {
         "title": soup.find("h1", class_="c-page-title").text,

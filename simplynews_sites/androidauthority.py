@@ -15,16 +15,11 @@ rss_feed = f"{base_url}/feed/"
 
 
 def get_page(url):
-    full_url = f"{base_url}/{url}"
-    soup = BeautifulSoup(
-        requests.get(
-            full_url,
-            headers={
-                "User-Agent": constants.USER_AGENT,
-            },
-        ).text,
-        "lxml",
+    response = requests.get(
+        f"{base_url}/{url}", headers={"User-Agent": constants.USER_AGENT}
     )
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "lxml")
 
     data = {
         "title": soup.find("h1", class_="main-title").text,
