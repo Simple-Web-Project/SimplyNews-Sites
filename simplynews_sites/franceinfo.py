@@ -93,10 +93,8 @@ def get_page(url):
         publish_date = post.select_one("div.publication-date")
         # there are two dates in this object, the first one is the publish date, the second one is the last_updated
         dates = publish_date.select("time")
-        if len(dates) == 1:
-            last_updated = dates.text
-        else:
-            last_updated = dates[1].text
+        # last in the list
+        last_updated = dates[-1].text
 
         author_list = post.select_one("div.c-signature__authors")
         for author in author_list.select(".c-signature__names"):
