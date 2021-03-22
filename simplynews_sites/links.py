@@ -11,6 +11,7 @@ from . import shacknews
 from . import androidpolice
 from . import lefigaro
 from . import franceinfo
+from . import developpez
 
 sites = {
     "shacknews.com": shacknews,
@@ -52,5 +53,8 @@ sites = {
     "francetvinfo.fr": franceinfo,
     "www.franceinfo.fr": franceinfo,
     "franceinfo.fr": franceinfo,
+
+    "www.developpez.com": developpez,
+    "developpez.com": developpez,
 
 }
