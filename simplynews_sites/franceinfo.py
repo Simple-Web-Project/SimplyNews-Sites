@@ -200,6 +200,14 @@ def get_page(url):
             if iframe:
                 el = iframe
 
+        elif element.name == "ul":
+            el["type"] = "unsorted list"
+            entries = []
+            for entry in element:
+                if entry.name == "li":
+                    entries.append({"value": entry.text})
+            el["entries"] = entries
+
         if el:
             article.append(el)
 
@@ -241,11 +249,14 @@ if __name__ == "__main__":
     # page_url = "sante/maladie/coronavirus/infographies-covid-19-cinq-graphiques-pour-comprendre-la-situation-epidemique-en-france_4310757.html"
     # infographies
 
-    page_url = "sante/maladie/coronavirus/vaccin/video-covid-19-les-plus-de-65-ans-pourront-se-faire-vacciner-a-partir-de-debut-avril-assure-jean-castex_4310939.html"
+    # page_url = "sante/maladie/coronavirus/vaccin/video-covid-19-les-plus-de-65-ans-pourront-se-faire-vacciner-a-partir-de-debut-avril-assure-jean-castex_4310939.html"
     # multiple videos in json
 
-    page_url = "sante/maladie/coronavirus/covid-19-le-passeport-vaccinal-evoque-par-la-commission-europeenne-est-il-juridiquement-possible_4317149.html"
+    # page_url = "sante/maladie/coronavirus/covid-19-le-passeport-vaccinal-evoque-par-la-commission-europeenne-est-il-juridiquement-possible_4317149.html"
     # The Conversation pixel tracking
+
+    page_url = "sante/maladie/coronavirus/confinement/dedans-avec-les-miens-dehors-en-citoyen-la-campagne-de-communication-du-gouvernement-sur-les-gestes-barrieres-devoilee-par-jean-castex_4343313.html"
+    # ul
 
     page = get_page(page_url)
 
