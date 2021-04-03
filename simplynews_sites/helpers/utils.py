@@ -12,9 +12,13 @@ def value_in_element_attr(element, value, attr: str = "class"):
             return False
 
 
-def fix_link(link):
+def fix_link(link, domain=None):
     if link.startswith("//"):
         return "https:{}".format(link)
+    elif link.startswith("/") and domain:
+        return "/{}{}".format(domain, link)
+    else:
+        return link
 
 
 def get_property(element, attribute: str):

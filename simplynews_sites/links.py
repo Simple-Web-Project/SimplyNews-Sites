@@ -12,6 +12,7 @@ from . import androidpolice
 from . import lefigaro
 from . import franceinfo
 from . import developpez
+from . import mediapart
 
 sites = {
     "shacknews.com": shacknews,
@@ -56,5 +57,7 @@ sites = {
 
     "www.developpez.com": developpez,
     "developpez.com": developpez,
+    "www.mediapart.fr": mediapart,
+    "mediapart.fr": mediapart
 
 }
