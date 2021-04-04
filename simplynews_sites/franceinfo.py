@@ -65,12 +65,11 @@ def get_page(url):
     json_element = soup.find("script", type="application/ld+json")
     info = json.loads(json_element.next)
 
-    datePublished = info["datePublished"]
-    dateModified = info["dateModified"]
+    dateModified = info.get("dateModified")
     if dateModified:
         last_updated = datetime.strptime(dateModified, DATE_PATTERN)
     else:
-        last_updated = datetime.strptime(datePublished, DATE_PATTERN)
+        last_updated = datetime.strptime(info["datePublished"], DATE_PATTERN)
 
     author = info["author"]
     authors = []
