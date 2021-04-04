@@ -201,6 +201,15 @@ def get_page(url):
         if el:
             article.append(el)
 
+    if utils.value_in_element_attr(post, "content-slideshow"):
+        for element in post.select(".photo") or []:
+            img = get_image(element.find("img"))
+            if img:
+                article.append(img)
+            caption = element.find("figcaption")
+            if caption:
+                article.append(get_paragraph(caption.text))
+
     data["article"] = article
     return data
 
@@ -256,8 +265,11 @@ if __name__ == "__main__":
     # page_url = "sante/maladie/coronavirus/covid-19-le-passeport-vaccinal-evoque-par-la-commission-europeenne-est-il-juridiquement-possible_4317149.html"
     # The Conversation pixel tracking
 
-    page_url = "sante/maladie/coronavirus/confinement/dedans-avec-les-miens-dehors-en-citoyen-la-campagne-de-communication-du-gouvernement-sur-les-gestes-barrieres-devoilee-par-jean-castex_4343313.html"
+    # page_url = "sante/maladie/coronavirus/confinement/dedans-avec-les-miens-dehors-en-citoyen-la-campagne-de-communication-du-gouvernement-sur-les-gestes-barrieres-devoilee-par-jean-castex_4343313.html"
     # ul
+
+    page_url = "monde/afrique/afrique-du-sud/afrique-du-sud-pour-ne-plus-etre-des-cibles-les-femmes-prennent-les-armes_4354289.html"
+    # slideshow
 
     page = get_page(page_url)
 
