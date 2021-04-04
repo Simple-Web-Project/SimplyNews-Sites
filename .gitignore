@@ -4,3 +4,4 @@ simplynews_sites/helpers/__pycache__
 build/
 dist/
 simplynews_sites.egg-info/
+.vscode/
