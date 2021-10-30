@@ -80,7 +80,7 @@ def get_page(url):
     if heading_image is not None:
         article.append(get_image(heading_image))
 
-    post_content = post.select_one("div.fig-body")
+    post_content = post.select_one("div.fig-content-body")
 
     if post_content is None:  # not a regular article
         poll_element = post.select_one("div.fig-poll")  # poll "article"
