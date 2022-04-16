@@ -8,8 +8,8 @@ with a frontend like [SimplyNews-Web](https://codeberg.org/SimpleWeb/SimplyNews-
 ### How to install
 ```sh
 # Clone the git repository and navigate into it
-git clone https://git.sr.ht/~metalune/simplynews_sites
-cd simplynews_sites
+git clone https://codeberg.org/SimpleWeb/SimplyNews-Sites
+cd SimplyNews-Sites
 # Install it
 sudo python3 setup.py install
 ```
