@@ -3,7 +3,7 @@
 This is the home of all scrapers for SimplyNews
 
 You can use those directly if you wish, but we recommend utilizing them
-with a frontend like [simplynew_web](https://git.sr.ht/~metalune/simplynews_web)
+with a frontend like [SimplyNews-Web](https://codeberg.org/SimpleWeb/SimplyNews-Web)
 
 ### How to install
 ```sh

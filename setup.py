@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name = "simplynews_sites",
     version = "0.0.1",
-    url = "https://git.sr.ht/~metalune/simplynews_sites",
+    url = "https://codeberg.org/SimpleWeb/SimplyNews-Sites",
 
     license = "AGPLv3 or later",
     keywords = "scraper news simple web",
