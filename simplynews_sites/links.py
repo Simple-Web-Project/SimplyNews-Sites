@@ -18,39 +18,20 @@ from . import aljazeeranet
 
 sites = {
     "gaming": {
-
-        "shacknews.com": shacknews,
-        "www.shacknews.com": shacknews,
-
-        "gameinformer.com": gameinformer,
-        "www.gameinformer.com": gameinformer,
+        shacknews.identifier: shacknews,
+        gameinformer.identifier: gameinformer,
     },
     "tech": {
-        "makeuseof.com": makeuseof,
-        "www.makeuseof.com": makeuseof,
-
-        "heise.de": heise,
-        "www.heise.de": heise,
-
-        "theverge.com": theverge,
-        "www.theverge.com": theverge,
-
-        "dt.gl": decentralizetoday,
-
-        "www.developpez.com": developpez,
-        "developpez.com": developpez,
+        makeuseof.identifier: makeuseof,
+        heise.identifier: heise,
+        theverge.identifier: theverge,
+        decentralizetoday.identifier: decentralizetoday,
+        developpez.identifier: developpez,
     },
     "news": {
-        "theguardian.com": theguardian,
-        "www.theguardian.com": theguardian,
-
-        "aljazeera.net": aljazeeranet,
-        "www.aljazeera.net": aljazeeranet,
-
-        "www.francetvinfo.fr": franceinfo,
-        "francetvinfo.fr": franceinfo,
-        "www.franceinfo.fr": franceinfo,
-        "franceinfo.fr": franceinfo,
+        theguardian.identifier: theguardian,
+        aljazeeranet.identifier: aljazeeranet,
+        franceinfo.identifier: franceinfo,
     }
 
 

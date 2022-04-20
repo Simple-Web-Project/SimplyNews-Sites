@@ -129,6 +129,8 @@ def get_recent_articles():
 
         local_link = url.path.strip("/")  # Kill annoying slashes
 
+        print(local_link)
+
         r = requests.get(entry['link'])
         soup = soup = BeautifulSoup(r.text, "lxml")
 
