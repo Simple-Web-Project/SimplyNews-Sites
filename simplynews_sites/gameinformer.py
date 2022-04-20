@@ -8,6 +8,7 @@ base_url = "https://gameinformer.com"
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "gameinformer"
 site_title = "GameInformer"
+site_logo = "gameinformer.svg"
 
 rss_feed = f"{base_url}/rss.xml"
 

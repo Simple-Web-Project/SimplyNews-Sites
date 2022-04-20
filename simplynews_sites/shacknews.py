@@ -8,6 +8,7 @@ identifier = "shacknews"
 base_url = "https://shacknews.com"
 
 site_title = "Shack News"
+site_logo = "shacknews.svg"
 
 rss_feed = f"{base_url}/feed/rss"
 

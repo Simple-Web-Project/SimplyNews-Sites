@@ -8,6 +8,7 @@ base_url = "https://heise.de"
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "heise"
 site_title = "heise online"
+site_logo = "heise.svg"
 
 rss_feed = f"{base_url}/rss/heise-atom.xml"
 

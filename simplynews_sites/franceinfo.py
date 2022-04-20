@@ -4,13 +4,18 @@ from bs4 import BeautifulSoup
 from html import unescape
 import requests
 import json
+import feedparser
+import urllib
 
 cache_refresh_time_delta = timedelta(hours=3)
 identifier = "franceinfo"
 site_title = "Franceinfo"
+site_logo = "francetvinfo.svg"
 
 base_url = "https://www.francetvinfo.fr"
 rss_feed = f"{base_url}/titres.rss"
+
+# https://www.francetvinfo.fr/titres.rss
 
 DATE_PATTERN = "%Y-%m-%dT%H:%M:%S%z"
 
@@ -226,8 +231,19 @@ def get_paragraph(text):
 
 
 def get_recent_articles():
-    return rss.default_feed_parser(rss_feed)
+    feed = feedparser.parse(rss_feed)
+    feed_ = []
+    for entry in feed["entries"]:
+        url = urllib.parse.urlparse(entry["link"])
+        
+        local_link = url.path.strip("/")  # Kill annoying slashes
 
+        feed_.append({
+            "title": entry["title"],
+            "link": local_link,
+            "image": entry['links'][1]['href']
+        })
+    return feed_
 
 if __name__ == "__main__":
     # page = get_recent_articles()

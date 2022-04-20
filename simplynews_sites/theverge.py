@@ -1,15 +1,18 @@
 from bs4 import BeautifulSoup
 import requests
 from datetime import timedelta
-from .helpers import rss
+import feedparser
+import urllib
+import re
 
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "theverge"
-site_title = "TheVerge"
+site_title = "theverge.com"
+site_logo = "the_verge.svg"
 
 base_url = "https://theverge.com"
 
-rss_feed = f"{base_url}/rss/full.xml"
+rss_feed = f"{base_url}/rss/index.xml"
 
 
 def get_page(url):
@@ -49,9 +52,29 @@ def get_page(url):
 
 
 def get_recent_articles():
-    return rss.default_feed_parser(rss_feed)
+    feed = feedparser.parse(rss_feed)
+    feed_ = []
+    for entry in feed["entries"]:
+        url = urllib.parse.urlparse(entry["link"])
+        # if url.hostname in links.sites:
+        local_link = url.path.strip("/")  # Kill annoying slashes
+        image = re.findall(r"<img.*src=\"(.*)\".*\/>",
+                           entry["content"][0]["value"])[0]
+
+        date = re.findall("(..*)T(.*?:.*?):", entry["updated"])
+        
+        updated = 'last updated ' + date[0][0] + ', ' + date[0][1]
+        
+        feed_.append({
+            "title": entry["title"],
+            "link": local_link,
+            "image": image,
+            "date": updated,
+            "author": entry['author'],
+        })
+    return feed_
 
 
 if __name__ == "__main__":
-    # get_page("2021/1/30/22257721/whatsapp-status-privacy-facebook-signal-telegram/")
-    print(get_recent_articles())
+    print(get_page("2021/1/30/22257721/whatsapp-status-privacy-facebook-signal-telegram/"))
+    # print(get_recent_articles())

@@ -9,6 +9,7 @@ import bs4
 cache_refresh_time_delta = timedelta(hours=3)
 identifier = "developpez"
 site_title = "Developpez.com"
+site_logo = "developpez.jpg"
 
 base_url = "https://www.developpez.com"
 

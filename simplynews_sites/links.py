@@ -1,63 +1,75 @@
 from . import gameinformer
 from . import makeuseof
-from . import androidauthority
+# from . import androidauthority
 from . import heise
 from . import theverge
-from . import itsfoss
+# from . import itsfoss
 from . import decentralizetoday
-from . import nypost
+# from . import nypost
 from . import theguardian
 from . import shacknews
-from . import androidpolice
-from . import lefigaro
+# from . import androidpolice
+# from . import lefigaro
 from . import franceinfo
 from . import developpez
-from . import mediapart
+# from . import mediapart
+
+from . import aljazeeranet
 
 sites = {
-    "shacknews.com": shacknews,
-    "www.shacknews.com": shacknews,
+    "gaming": {
 
-    "gameinformer.com": gameinformer,
-    "www.gameinformer.com": gameinformer,
+        "shacknews.com": shacknews,
+        "www.shacknews.com": shacknews,
 
-    "makeuseof.com": makeuseof,
-    "www.makeuseof.com": makeuseof,
+        "gameinformer.com": gameinformer,
+        "www.gameinformer.com": gameinformer,
+    },
+    "tech": {
+        "makeuseof.com": makeuseof,
+        "www.makeuseof.com": makeuseof,
 
-    "androidauthority.com": androidauthority,
-    "www.androidauthority.com": androidauthority,
+        "heise.de": heise,
+        "www.heise.de": heise,
 
-    "www.androidpolice.com": androidpolice,
-    "androidpolice.com": androidpolice,
+        "theverge.com": theverge,
+        "www.theverge.com": theverge,
 
-    "heise.de": heise,
-    "www.heise.de": heise,
+        "dt.gl": decentralizetoday,
 
-    "theverge.com": theverge,
-    "www.theverge.com": theverge,
+        "www.developpez.com": developpez,
+        "developpez.com": developpez,
+    },
+    "news": {
+        "theguardian.com": theguardian,
+        "www.theguardian.com": theguardian,
 
-    "itsfoss.com": itsfoss,
-    "www.itsfoss.com": itsfoss,
+        "aljazeera.net": aljazeeranet,
+        "www.aljazeera.net": aljazeeranet,
 
-    "dt.gl": decentralizetoday,
+        "www.francetvinfo.fr": franceinfo,
+        "francetvinfo.fr": franceinfo,
+        "www.franceinfo.fr": franceinfo,
+        "franceinfo.fr": franceinfo,
+    }
 
-    "nypost.com": nypost,
-    "www.nypost.com": nypost,
 
-    "theguardian.com": theguardian,
-    "www.theguardian.com": theguardian,
+    # "androidauthority.com": androidauthority,
+    # "www.androidauthority.com": androidauthority,
 
-    "lefigaro.fr": lefigaro,
-    "www.lefigaro.fr": lefigaro,
+    # "www.androidpolice.com": androidpolice,
+    # "androidpolice.com": androidpolice,
 
-    "www.francetvinfo.fr": franceinfo,
-    "francetvinfo.fr": franceinfo,
-    "www.franceinfo.fr": franceinfo,
-    "franceinfo.fr": franceinfo,
+    # "itsfoss.com": itsfoss,
+    # "www.itsfoss.com": itsfoss,
 
-    "www.developpez.com": developpez,
-    "developpez.com": developpez,
-    "www.mediapart.fr": mediapart,
-    "mediapart.fr": mediapart
+    # "nypost.com": nypost,
+    # "www.nypost.com": nypost,
+
+    # "lefigaro.fr": lefigaro,
+    # "www.lefigaro.fr": lefigaro,
+
+    # "www.mediapart.fr": mediapart,
+    # "mediapart.fr": mediapart
 
 }

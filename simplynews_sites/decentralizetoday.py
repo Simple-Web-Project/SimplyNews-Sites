@@ -7,7 +7,8 @@ cache_refresh_time_delta = timedelta(days=1)
 identifier = "decentralizetoday"
 base = "https://dt.gl"
 
-site_title = "Decentralize.Today"
+site_title = "Decentralize Today"
+site_logo = "decentralizetoday.svg"
 
 rss_feed = f"{base}/rss/"
 

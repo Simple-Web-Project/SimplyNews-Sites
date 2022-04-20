@@ -2,13 +2,15 @@ from bs4 import BeautifulSoup
 import requests
 import json
 from datetime import timedelta
-from .helpers import rss
+import urllib
+import feedparser
 
 identifier = "theguardian"
 cache_refresh_time_delta = timedelta(hours=12)
 base_url = "https://www.theguardian.com"
 
 site_title = "The Guardian"
+site_logo = "the_guardian.svg"
 
 rss_feed = f"{base_url}/international/rss"
 
@@ -73,7 +75,22 @@ def get_page(url):
 
 
 def get_recent_articles():
-    return rss.default_feed_parser(rss_feed)
+    feed = feedparser.parse(rss_feed)
+    feed_ = []
+    for entry in feed["entries"]:
+        url = urllib.parse.urlparse(entry["link"])
+
+        local_link = url.path.strip("/")  # Kill annoying slashes
+
+        feed_.append({
+            "title": entry["title"],
+            "link": local_link,
+            "image": entry['media_content'][1]['url'],
+            "date": entry['published'],
+            "author": entry['author']
+        })
+    del feed_[0]
+    return feed_
 
 
 def get_image(figure):
@@ -118,6 +135,6 @@ if __name__ == "__main__":
 
     page_url = "global-development/2021/feb/23/revealed-migrant-worker-deaths-qatar-fifa-world-cup-2022"
 
-    page = get_page(page_url)
+    page = json.dumps(get_page(page_url), ensure_ascii=False, indent=2)
 
     print(page)
