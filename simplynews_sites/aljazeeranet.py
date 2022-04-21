@@ -41,7 +41,7 @@ def get_page(url):
             break
 
     _article_excerpt = soup.find("div", class_="article-excerpt")
-    if _article_excerpt.text.strip() != '':
+    if _article_excerpt and _article_excerpt.text.strip() != '':
         article.append({
             "type": "paragraph",
             "value": _article_excerpt.text
