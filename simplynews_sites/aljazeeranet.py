@@ -40,6 +40,13 @@ def get_page(url):
             })
             break
 
+    _article_excerpt = soup.find("div", class_="article-excerpt")
+    if _article_excerpt.text.strip() != '':
+        article.append({
+            "type": "paragraph",
+            "value": _article_excerpt.text
+        })
+
     for element in soup.find("div", class_="wysiwyg"):
 
         if element.name == "p" and len(element.findAll('img')) > 0:

@@ -13,6 +13,3 @@ cd SimplyNews-Sites
 # Install it
 sudo python3 setup.py install
 ```
-
-### Infos and TODOs
-You can see our API Reference and TODO list [here](https://man.sr.ht/~metalune/simplynews/)
