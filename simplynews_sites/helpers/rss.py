@@ -1,5 +1,6 @@
 import feedparser
 import urllib
+from colorama import Fore, Back, Style
 
 def default_feed_parser(feed_link):
     feed = feedparser.parse(feed_link)
@@ -13,4 +14,5 @@ def default_feed_parser(feed_link):
             "title": entry["title"],
             "link": local_link,
         })
+        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + f'/{urllib.parse.unquote(local_link)}')
     return feed_

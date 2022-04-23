@@ -4,6 +4,8 @@ import json
 from datetime import timedelta
 import urllib
 import feedparser
+import urllib.parse
+from colorama import Fore, Back, Style
 
 identifier = "theguardian"
 cache_refresh_time_delta = timedelta(hours=12)
@@ -13,7 +15,6 @@ site_title = "The Guardian"
 site_logo = "the_guardian.svg"
 
 rss_feed = f"{base_url}/international/rss"
-
 
 def get_page(url):
     response = requests.get(f"{base_url}/{url}.json")
@@ -81,6 +82,8 @@ def get_recent_articles():
         url = urllib.parse.urlparse(entry["link"])
 
         local_link = url.path.strip("/")  # Kill annoying slashes
+
+        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + f'{base_url}/{urllib.parse.unquote(local_link)}')
 
         feed_.append({
             "title": entry["title"],

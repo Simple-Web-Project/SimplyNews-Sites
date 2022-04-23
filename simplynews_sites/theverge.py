@@ -4,6 +4,7 @@ from datetime import timedelta
 import feedparser
 import urllib
 import re
+from colorama import Fore, Back, Style
 
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "theverge"
@@ -72,6 +73,7 @@ def get_recent_articles():
             "date": updated,
             "author": entry['author'],
         })
+        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + f'{base_url}/{urllib.parse.unquote(local_link)}')
     return feed_
 
 

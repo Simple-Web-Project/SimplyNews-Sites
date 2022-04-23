@@ -3,6 +3,7 @@ import feedparser
 import urllib
 import requests
 from datetime import timedelta
+from colorama import Fore, Back, Style
 
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "nytimes"
@@ -28,7 +29,7 @@ def get_recent_articles():
         local_link = url.path.strip("/")  # Kill annoying slashes
 
         feed_.append({"title": entry["title"], "link": local_link})
-
+        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + f'{base_url}/{urllib.parse.unquote(local_link)}')
     return feed_
 
 

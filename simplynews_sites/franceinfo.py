@@ -6,6 +6,7 @@ import requests
 import json
 import feedparser
 import urllib
+from colorama import Fore, Back, Style
 
 cache_refresh_time_delta = timedelta(hours=3)
 identifier = "franceinfo"
@@ -243,6 +244,7 @@ def get_recent_articles():
             "link": local_link,
             "image": entry['links'][1]['href']
         })
+        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + f'{base_url}/{urllib.parse.unquote(local_link)}')
     return feed_
 
 if __name__ == "__main__":
