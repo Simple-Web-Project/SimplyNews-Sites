@@ -28,7 +28,7 @@ profile = webdriver.FirefoxProfile()
 
 profile.set_preference("general.useragent.override",
                        "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko; Mediapartners-Google) Chrome/89.0.4389.130 Mobile Safari/537.36")
-driver = webdriver.Firefox(profile)
+driver = webdriver.Firefox(profile, executable_path='./drivers/geckodriver')
 
 # https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9
 
