@@ -8,7 +8,7 @@ identifier = "decentralizetoday"
 base = "https://dt.gl"
 
 site_title = "Decentralize Today"
-site_logo = "decentralizetoday.svg"
+site_logo = "decentralizetoday.webp"
 
 rss_feed = f"{base}/rss/"
 

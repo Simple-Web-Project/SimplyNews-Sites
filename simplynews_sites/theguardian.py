@@ -12,7 +12,7 @@ cache_refresh_time_delta = timedelta(hours=12)
 base_url = "https://www.theguardian.com"
 
 site_title = "The Guardian"
-site_logo = "the_guardian.svg"
+site_logo = "the_guardian.webp"
 
 rss_feed = f"{base_url}/international/rss"
 

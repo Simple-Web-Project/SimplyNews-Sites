@@ -20,7 +20,7 @@ cache_refresh_time_delta = timedelta(hours=12)
 base_url = "https://www.aljazeera.net"
 
 site_title = "الجزيرة نت"
-site_logo = "aljazeera.svg"
+site_logo = "aljazeera.webp"
 site_dir = "rtl"
 
 rss_feed = f"{base_url}/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9"

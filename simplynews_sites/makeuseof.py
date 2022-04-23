@@ -8,7 +8,7 @@ identifier = "makeuseof"
 base_url = "https://makeuseof.com"
 
 site_title = "Make Use Of"
-site_logo = "makeuseof.svg"
+site_logo = "makeuseof.webp"
 
 rss_feed = f"{base_url}/feed/"
 

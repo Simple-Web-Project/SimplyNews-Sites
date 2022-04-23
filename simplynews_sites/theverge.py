@@ -9,7 +9,7 @@ from colorama import Fore, Back, Style
 cache_refresh_time_delta = timedelta(hours=12)
 identifier = "theverge"
 site_title = "theverge.com"
-site_logo = "the_verge.svg"
+site_logo = "the_verge.webp"
 
 base_url = "https://theverge.com"
 

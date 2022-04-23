@@ -11,7 +11,7 @@ from colorama import Fore, Back, Style
 cache_refresh_time_delta = timedelta(hours=3)
 identifier = "franceinfo"
 site_title = "Franceinfo"
-site_logo = "francetvinfo.svg"
+site_logo = "francetvinfo.webp"
 
 base_url = "https://www.francetvinfo.fr"
 rss_feed = f"{base_url}/titres.rss"
