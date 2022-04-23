@@ -14,5 +14,5 @@ def default_feed_parser(feed_link):
             "title": entry["title"],
             "link": local_link,
         })
-        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + f'/{urllib.parse.unquote(local_link)}')
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + f'/{urllib.parse.unquote(feed_link)}')
     return feed_

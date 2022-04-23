@@ -13,6 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import time
 from colorama import Fore, Back, Style
+from pyvirtualdisplay import Display
 
 identifier = "aljazeera.net"
 cache_refresh_time_delta = timedelta(hours=12)
@@ -28,6 +29,9 @@ profile = webdriver.FirefoxProfile()
 
 profile.set_preference("general.useragent.override",
                        "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko; Mediapartners-Google) Chrome/89.0.4389.130 Mobile Safari/537.36")
+
+display = Display(visible=0, size=(800, 600))
+display.start()
 driver = webdriver.Firefox(profile, executable_path='./drivers/geckodriver')
 
 # https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9
@@ -66,15 +70,14 @@ def get_page(url):
         except:
             pass
 
-    for figure in driver.find_elements(By.TAG_NAME, 'figure'):
-        if (re.search(r'class=".*article-featured-image.*?"', figure.get_attribute('innerHTML'))):
-            image = figure.find_element(By.TAG_NAME, 'img')
-            article.append({
-                'type': 'image',
-                'src': base_url + image.get_attribute('src'),
-                'alt': image.get_attribute('alt')
-            })
-            break
+    for figure in driver.find_elements(By.XPATH, '//figure[@class="article-featured-image"]'):
+        image = figure.find_element(By.TAG_NAME, 'img')
+        article.append({
+            'type': 'image',
+            'src': image.get_attribute('src'),
+            'alt': image.get_attribute('alt')
+        })
+        break
 
     _article_excerpt = driver.find_elements(By.CLASS_NAME, 'article-excerpt')
     if len(_article_excerpt) > 0 and _article_excerpt[0].text.strip() != '':
@@ -84,15 +87,15 @@ def get_page(url):
         })
 
     for element in driver.find_element(By.CLASS_NAME, 'wysiwyg').find_elements(By.XPATH, ".//*"):
-        if element.tag_name == "p" and len(element.find_elements_by_tag_name('img')) > 0:
-            image = element.find_elements_by_tag_name('img')[0]
+        if element.tag_name == "p" and len(element.find_elements(By.TAG_NAME, 'img')) > 0:
+            image = element.find_elements(By.TAG_NAME, 'img')[0]
             article.append({
                 'type': 'image',
                 'src': base_url + image.get_attribute('src'),
                 'alt': image.get_attribute('alt')
             })
         elif element.tag_name == 'figure':
-            images = element.find_elements_by_tag_name('img')
+            images = element.find_elements(By.TAG_NAME, 'img')
             if len(images) > 0:
                 article.append({
                     'type': 'image',
@@ -106,7 +109,7 @@ def get_page(url):
                     "src": video[0].get_attribute("src"),
                 })
         elif element.tag_name == "p":
-            if len(element.find_elements_by_tag_name('a')) > 0:
+            if len(element.find_elements(By.TAG_NAME, 'a')) > 0:
                 # "".join([str(x) for x in element.contents]))
                 myList = re.findall(
                     r"(?:(.*)<a.*href=\"(.*)\">(.*)<\/a>(.*)){1,}",
@@ -174,7 +177,8 @@ def get_page(url):
         "last_updated": published,
         "article": article
     }
-    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + f"{base_url}/{urllib.parse.unquote(url)}")
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL +
+          f"{base_url}/{urllib.parse.unquote(url)}")
 
     return data
 
@@ -188,7 +192,7 @@ def get_recent_articles():
         local_link = url.path.strip("/")  # Kill annoying slashes
 
         r = requests.get(entry['link'])
-        soup = soup = BeautifulSoup(r.text, "lxml")
+        soup = BeautifulSoup(r.text, "lxml")
 
         choosenImage = None
         for figure in soup.findAll('figure'):
@@ -217,8 +221,8 @@ def get_recent_articles():
             "image": choosenImage,
             "date": entry['published'],
         })
-        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL +
-              f'{base_url}/{urllib.parse.unquote(local_link)}')
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL +
+          f'{base_url}/{urllib.parse.unquote(rss_feed)}')
     return feed_
 
 
