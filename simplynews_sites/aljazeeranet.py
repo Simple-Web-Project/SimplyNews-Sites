@@ -30,8 +30,8 @@ profile = webdriver.FirefoxProfile()
 profile.set_preference("general.useragent.override",
                        "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko; Mediapartners-Google) Chrome/89.0.4389.130 Mobile Safari/537.36")
 
-display = Display(visible=0, size=(800, 600))
-display.start()
+# display = Display(visible=0, size=(800, 600))
+# display.start()
 driver = webdriver.Firefox(profile, executable_path='./drivers/geckodriver')
 
 # https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9
@@ -46,29 +46,15 @@ def get_page(url):
 
     article = []
 
-    try:
-        video = driver.find_element(
-            By.CLASS_NAME, 'article-featured-video'
-        ).find_element(
+    for div in driver.find_elements(By.CLASS_NAME, 'aj-video-player'):
+        video = div.find_element(
             By.XPATH,
             '//video[@class="vjs-tech"]')
         article.append({
             "type": "video",
             "src": video.get_attribute("src"),
         })
-    except:
-        try:
-            video = driver.find_element(
-                By.CLASS_NAME, 'article__featured-video'
-            ).find_element(
-                By.XPATH,
-                '//video[@class="vjs-tech"]')
-            article.append({
-                "type": "video",
-                "src": video.get_attribute("src"),
-            })
-        except:
-            pass
+        print(video.get_attribute("src"))
 
     for figure in driver.find_elements(By.XPATH, '//figure[@class="article-featured-image"]'):
         image = figure.find_element(By.TAG_NAME, 'img')
