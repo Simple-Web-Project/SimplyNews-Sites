@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name = "simplynews_sites",
-    version = "0.0.3",
+    version = "0.0.4",
     url = "https://codeberg.org/SimpleWeb/SimplyNews-Sites",
 
     license = "AGPLv3 or later",
