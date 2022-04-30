@@ -14,9 +14,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-import time
 from colorama import Fore, Back, Style
-from pyvirtualdisplay import Display
 
 identifier = "aljazeera.net"
 cache_refresh_time_delta = timedelta(hours=12)
@@ -28,12 +26,8 @@ site_dir = "rtl"
 
 rss_feed = f"{base_url}/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9"
 
-
-display = Display(visible=0, size=(800, 600))
-display.start()
 options = Options()
-
-options = Options()
+options.add_argument("--headless")
 options.set_preference('general.useragent.override',
                        'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko; Mediapartners-Google) Chrome/89.0.4389.130 Mobile Safari/537.36')
 service = Service('./drivers/geckodriver')
