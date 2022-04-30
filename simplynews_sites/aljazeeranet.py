@@ -6,12 +6,14 @@ import urllib
 import feedparser
 import re
 from selenium import webdriver
+from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+
 import time
 from colorama import Fore, Back, Style
 from pyvirtualdisplay import Display
@@ -30,17 +32,12 @@ rss_feed = f"{base_url}/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1
 display = Display(visible=0, size=(800, 600))
 display.start()
 options = Options()
-profile = FirefoxProfile()
-profile.set_preference(
-    "general.useragent.override",
-    "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko; Mediapartners-Google) Chrome/89.0.4389.130 Mobile Safari/537.36"
-)
-options.profile = profile
-# options.page_l    oad_strategy = 'eager'
-driver = webdriver.Firefox(
-    options=options,
-    executable_path='./drivers/geckodriver'
-)
+
+options = Options()
+options.set_preference('general.useragent.override',
+                       'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko; Mediapartners-Google) Chrome/89.0.4389.130 Mobile Safari/537.36')
+service = Service('./drivers/geckodriver')
+driver = Firefox(service=service, options=options)
 
 # https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9
 
@@ -77,7 +74,8 @@ def get_page(url):
             })
 
         # Small summary body
-        _article_excerpt = driver.find_elements(By.CLASS_NAME, 'article-excerpt')
+        _article_excerpt = driver.find_elements(
+            By.CLASS_NAME, 'article-excerpt')
         if len(_article_excerpt) > 0 and _article_excerpt[0].text.strip() != '':
             article.append({
                 "type": "paragraph",
@@ -161,7 +159,8 @@ def get_page(url):
                 })
 
         source = None
-        _source_elements = driver.find_elements(By.CLASS_NAME, 'article-source')
+        _source_elements = driver.find_elements(
+            By.CLASS_NAME, 'article-source')
         if len(_source_elements) > 0:
             source = _source_elements[0].text
 
