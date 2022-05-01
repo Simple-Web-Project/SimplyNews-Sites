@@ -5,14 +5,17 @@ from datetime import timedelta
 import urllib
 import feedparser
 import re
+
 from selenium import webdriver
-from selenium.webdriver import Firefox
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+
+# from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
 
 from colorama import Fore, Back, Style
 
@@ -27,11 +30,16 @@ site_dir = "rtl"
 rss_feed = f"{base_url}/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9"
 
 options = Options()
-options.add_argument("--headless")
-options.set_preference('general.useragent.override',
-                       'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/537.36 (KHTML, like Gecko; Mediapartners-Google) Chrome/89.0.4389.130 Mobile Safari/537.36')
-service = Service('./drivers/geckodriver')
-driver = Firefox(service=service, options=options)
+options.headless = True
+options.binary_location = './drivers/ungoogled-chromium_101.0.4951.41-1.1_linux/chrome'
+# options.set_preference(
+#     'general.useragent.override',
+#     'Mozilla/5.0 (Linux; Android 4.4.2; HTC Desire 820G dual sim) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36'
+# )
+options.add_argument(
+    'user-agent="Mozilla/5.0 (Android 4.4.4; Tablet; rv:68.0) Gecko/68.0 Firefox/68.0"')
+service = Service('./drivers/chromedriver')
+driver = webdriver.Chrome(service=service, options=options)
 
 # https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9
 
@@ -169,8 +177,6 @@ def get_page(url):
             "article": article
         }
 
-        print('Finished')
-
         return data
     except:
         return
@@ -225,6 +231,9 @@ if __name__ == "__main__":
     # page = get_recent_articles()
     # page_url = "news/2022/4/23/بلينكن-بكييف-الأحد-زيلينسكي-يدعو"
     page_url = "news/2022/4/23/%D8%A8%D9%84%D9%8A%D9%86%D9%83%D9%86-%D8%A8%D9%83%D9%8A%D9%8A%D9%81-%D8%A7%D9%84%D8%A3%D8%AD%D8%AF-%D8%B2%D9%8A%D9%84%D9%8A%D9%86%D8%B3%D9%83%D9%8A-%D9%8A%D8%AF%D8%B9%D9%88"
+    # https://www.aljazeera.net/news/2022/4/23/%D8%A8%D9%84%D9%8A%D9%86%D9%83%D9%86-%D8%A8%D9%83%D9%8A%D9%8A%D9%81-%D8%A7%D9%84%D8%A3%D8%AD%D8%AF-%D8%B2%D9%8A%D9%84%D9%8A%D9%86%D8%B3%D9%83%D9%8A-%D9%8A%D8%AF%D8%B9%D9%88
     page = json.dumps(get_page(page_url), ensure_ascii=False, indent=2)
     with open('result.json', "w") as cache_file:
         cache_file.write(page)
+
+    driver.quit()

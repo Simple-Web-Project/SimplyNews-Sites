@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name = "simplynews_sites",
-    version = "0.0.6",
+    version = "0.0.7",
     url = "https://codeberg.org/SimpleWeb/SimplyNews-Sites",
 
     license = "AGPLv3 or later",
@@ -15,7 +15,7 @@ setup(
         "bs4",
         "selenium",
         "lxml",
-        "pyvirtualdisplay",
+        "chromedriver_binary",
         "colorama",
     ]
 )
