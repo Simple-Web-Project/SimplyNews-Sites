@@ -1,5 +1,4 @@
 from .helpers import rss, utils
-from datetime import timedelta, datetime
 from bs4 import BeautifulSoup
 from html import unescape
 import requests
@@ -8,7 +7,6 @@ import feedparser
 import urllib
 from colorama import Fore, Back, Style
 
-cache_refresh_time_delta = timedelta(hours=3)
 identifier = "franceinfo"
 site_title = "Franceinfo"
 site_logo = "francetvinfo.webp"
@@ -17,9 +15,6 @@ base_url = "https://www.francetvinfo.fr"
 rss_feed = f"{base_url}/titres.rss"
 
 # https://www.francetvinfo.fr/titres.rss
-
-DATE_PATTERN = "%Y-%m-%dT%H:%M:%S%z"
-
 
 def get_image(img):
     if img is None:
@@ -39,7 +34,6 @@ def get_image(img):
         "src": src,
         "alt": img.get("alt") or img.get("title")
     }
-
 
 def get_iframe(iframe):
     if iframe is None:
@@ -71,12 +65,6 @@ def get_page(url):
     json_element = soup.find("script", type="application/ld+json")
     info = json.loads(json_element.next)
 
-    dateModified = info.get("dateModified")
-    if dateModified:
-        last_updated = datetime.strptime(dateModified, DATE_PATTERN)
-    else:
-        last_updated = datetime.strptime(info["datePublished"], DATE_PATTERN)
-
     author = info["author"]
     authors = []
     if isinstance(author, list):
@@ -102,7 +90,6 @@ def get_page(url):
         "title": title,
         "subtitle": subtitle,
         "author": author,
-        "last_updated": last_updated
     }
 
     article = []
@@ -236,7 +223,7 @@ def get_recent_articles():
     feed_ = []
     for entry in feed["entries"]:
         url = urllib.parse.urlparse(entry["link"])
-        
+
         local_link = url.path.strip("/")  # Kill annoying slashes
 
         feed_.append({
@@ -244,8 +231,10 @@ def get_recent_articles():
             "link": local_link,
             "image": entry['links'][1]['href']
         })
-        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + f'{base_url}/{urllib.parse.unquote(local_link)}')
+        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL +
+              f'{base_url}/{urllib.parse.unquote(local_link)}')
     return feed_
+
 
 if __name__ == "__main__":
     # page = get_recent_articles()
