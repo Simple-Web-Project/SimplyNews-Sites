@@ -5,3 +5,5 @@ build/
 dist/
 simplynews_sites.egg-info/
 .vscode/
+drivers/
+.fuse*

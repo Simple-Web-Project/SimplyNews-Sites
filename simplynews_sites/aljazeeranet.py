@@ -5,12 +5,11 @@ from datetime import timedelta
 import urllib
 import feedparser
 import re
+import .media
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-
-# from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -32,10 +31,6 @@ rss_feed = f"{base_url}/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1
 options = Options()
 options.headless = True
 options.binary_location = './drivers/ungoogled-chromium_101.0.4951.41-1.1_linux/chrome'
-# options.set_preference(
-#     'general.useragent.override',
-#     'Mozilla/5.0 (Linux; Android 4.4.2; HTC Desire 820G dual sim) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36'
-# )
 options.add_argument(
     'user-agent="Mozilla/5.0 (Android 4.4.4; Tablet; rv:68.0) Gecko/68.0 Firefox/68.0"')
 service = Service('./drivers/chromedriver')
@@ -44,7 +39,7 @@ driver = webdriver.Chrome(service=service, options=options)
 # https://www.aljazeera.net/aljazeerarss/a7c186be-1baa-4bd4-9d80-a84db769f779/73d0e1b4-532f-45ef-b135-bfdff8b8cab9
 
 
-def get_page(url):
+def get_page(url, cache_path):
     try:
         print(
             Fore.GREEN + 'Fetching ' + Style.RESET_ALL +
@@ -62,9 +57,10 @@ def get_page(url):
 
         # Header Video
         for video in driver.find_elements(By.XPATH, '//figure[@class="article-featured-video"]//video'):
+            proxied_src = media.save(video.get_attribute("src"), cache_path)
             article.append({
                 "type": "video",
-                "src": video.get_attribute("src"),
+                "src": proxied_src,
             })
 
         # Header image

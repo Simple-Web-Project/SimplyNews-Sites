@@ -30,7 +30,7 @@ sites = {
     },
     "news": {
         theguardian.identifier: theguardian,
-        aljazeeranet.identifier: aljazeeranet,
+        # aljazeeranet.identifier: aljazeeranet,
         franceinfo.identifier: franceinfo,
     }
 
