@@ -14,7 +14,7 @@ from . import franceinfo
 from . import developpez
 # from . import mediapart
 
-from . import aljazeeranet
+# from . import aljazeeranet
 
 sites = {
     "gaming": {
